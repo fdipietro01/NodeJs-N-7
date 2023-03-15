@@ -24,7 +24,7 @@ sessionsRouter.post("/login", async (req, res) => {
     };
     res.redirect("/products");
   } else {
-    res.status(404).send("Credenciales incorrectas");
+    return res.render("sessionAlert", {success: false, message: "Credenciales incorrectas", case: "Login", url:"/login"});
   }
 });
 
@@ -37,12 +37,12 @@ sessionsRouter.post("/register", isLogged, async (req, res) => {
   try {
     const exist = await UserModel.findOne({ email });
     if (exist) {
-      return res.status(404).send("Email ya registrado");
+      return res.render("sessionAlert", {success: false, message: "Email ya registrado", case: "Registro", url:"/register"});
     } else {
       //forma alternativa de crear el usuario al método create
       const user = new UserModel({ nombre, apellido, email, password: pass });
       await user.save();
-      res.render("registerSucces", {message: `${user.nombre} ${user.apellido} te has registrado exitosamente`})
+      res.render("sessionAlert", {success: true, message: `${user.nombre} ${user.apellido} te has registrado exitosamente`, url:"/login"})
     }
   } catch (err) {
     console.log(err);
