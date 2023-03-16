@@ -5,10 +5,6 @@ const isLogged = require('../middleware/isLogged')
 
 const sessionsRouter = Router();
 
-sessionsRouter.get("/register", isLogged, (req, res) => {
-  res.render("register");
-});
-
 sessionsRouter.post("/login", async (req, res) => {
   const administrator = {email: "flavio@admin", password: "admin"}
   const { mail, pass } = req.body;
