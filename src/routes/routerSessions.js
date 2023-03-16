@@ -31,7 +31,7 @@ sessionsRouter.post("/login", async (req, res) => {
 sessionsRouter.post("/register", isLogged, async (req, res) => {
   const { nombre, apellido, usuario, pass, email } = req.body;
   if (!nombre || !apellido || !usuario || !pass || !email) {
-    return res.status(404).send("Enviar todos los datos");
+    return res.render("sessionAlert", {success: false, message: "Completar todos los campos", case: "Registro", url:"/register"});
   }
   //validar si existe el usuario
   try {
